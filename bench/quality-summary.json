@@ -1,0 +1,45 @@
+{
+  "model": "nemotron-super-vl",
+  "n": {
+    "knowledge": 20,
+    "math": 20,
+    "truth": 20,
+    "instruct": 20,
+    "code": 20,
+    "tools": 20
+  },
+  "expected_n": {
+    "knowledge": 20,
+    "math": 20,
+    "truth": 20,
+    "instruct": 20,
+    "code": 20,
+    "tools": 20
+  },
+  "complete": true,
+  "timed_out": false,
+  "overall": {
+    "policy": "strict",
+    "score": 84.16666666666667
+  },
+  "overall_flags": [
+    "truncated:instruct",
+    "trunc-in-think:instruct",
+    "loop-failures:instruct"
+  ],
+  "benchmark_fingerprint": "ec8ba0eaee88fa0a3e75739d6fd61e903a416644721cd41a3c1b7e6a65fecb4d",
+  "selection_fingerprint": "05c04833fcdb",
+  "policy_fingerprint": "b58cb90e8f47",
+  "parser": "v5",
+  "code_execution": "host-guarded",
+  "categories": {
+    "knowledge": 85.0,
+    "math": 100.0,
+    "truth": 85.0,
+    "instruct": 50.0,
+    "code": 100.0,
+    "tools": 85.0
+  },
+  "scope": "Historical Super VL built-in MTP5 serve only; LiLiCorr/DFlash quality not measured.",
+  "source_basename": "spark-vllm-nemotron-super-vl-nvfp4-c4-20261015T012015-0700.json"
+}

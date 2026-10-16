@@ -1,0 +1,19 @@
+{
+  "note": "Historical on-host Sixcat receipts. The two committed speed receipts differ from the original only by replacing two absolute server_props root paths with ${MODEL_DIR}. Quality summary extracts scored metadata, excluding item prompts and responses. No new GPU run was performed by this repository.",
+  "baseline": {
+    "source_basename": "spark-vllm-nemotron-super-vl-nvfp4-speed-20261015T141441-0700.json",
+    "original_sha256": "b40a0ed77faa427fbc3535b439d4a7f03db1bc8335fba66bd7de915dea16d43d",
+    "committed_sha256": "3d8db4ccc1174edcd3acabf57c3973ebf74b51e25d270245e73da53657378364"
+  },
+  "dflash": {
+    "source_basename": "spark-vllm-nemotron-super-vl-nvfp4-lilicorr-dflash7-speed-20261016T102928-0700.json",
+    "original_sha256": "88124bf9bba196b5b7219da45bc8b807a0805fcb41934842b89fd0cc9b1504ae",
+    "committed_sha256": "55762ef6fba7f12b63ea6dc08c0d0e70c9c61a2e4de7f42ef0ce17c5d089b2cc"
+  },
+  "quality": {
+    "source_basename": "spark-vllm-nemotron-super-vl-nvfp4-c4-20261015T012015-0700.json",
+    "original_sha256": "14875719afe60d792c747b5bcd5a270454c71fbf7622c65ffd21b7500d9cb747",
+    "committed": "quality-summary.json",
+    "arm": "mtp5"
+  }
+}
