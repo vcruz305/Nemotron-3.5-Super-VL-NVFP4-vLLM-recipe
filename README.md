@@ -1,6 +1,11 @@
 # Nemotron 3.5 Super VL NVFP4 — vLLM recipe
 
-Unofficial text-serving recipe for NVIDIA Nemotron 3.5 Super VL on one DGX Spark (GB10, 128 GB unified memory). The target and LiLiCorr draft were obtained under **private NGC access**. **This repository contains no weights, private NGC org/team identifier, credentials, or calibration data.** Obtain both exact versions under your own authorized access; do not mirror them from this recipe. Nothing here starts, stops, or configures `rexl3-manager`.
+Unofficial text-serving recipe for NVIDIA Nemotron 3.5 Super VL on one DGX Spark (GB10, 128 GB unified memory). The **measured** target and LiLiCorr draft were obtained under private NGC access. **This repository contains no weights, private NGC org/team identifier, credentials, or calibration data.** The official Hugging Face releases are linked below, but their weights have **not** been verified byte-identical to the measured NGC versions; do not transfer the speed/quality figures to a different checkpoint without retesting. Nothing here starts, stops, or configures `rexl3-manager`.
+
+## Hugging Face models
+
+- **Target:** [NVIDIA Nemotron 3.5 Super VL 120B-A12B NVFP4](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4) — public release; not the pinned private NGC target used for the measurements below.
+- **Optional draft:** [NVIDIA Nemotron 3.5 Super VL NVFP4 LiLiCorr](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4-LiLiCorr) — public release; equivalence to the measured NGC draft has not been checked.
 
 ## Measured configurations
 
