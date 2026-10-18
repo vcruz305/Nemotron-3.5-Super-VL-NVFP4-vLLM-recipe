@@ -48,9 +48,16 @@ ngc registry model download-version "$NGC_CLI_ORG/$NGC_CLI_TEAM/nemotron-3.5-sup
 The CLI download/verification path above has **not** been replayed from this repository. Verify the nested trees against each private NGC manifest (size and per-file SHA-256) before serving. On the measured box, the directories were named as below; override them if yours differ:
 
 ```bash
+# Optional: copy and adjust .env for local paths and configuration:
+# VLLM_BIN, MODEL_DIR, DRAFT_DIR, PORT, HOST
 export VLLM_BIN="$HOME/vllm31-venv/bin/vllm"
 export MODEL_DIR="$HOME/models/Nemotron-3.5-Super-VL-NVFP4-ga-20261003/nemotron-3.5-super-vl-120b-a12b-ea20261008_vnvfp4-ga-20261003"
 export DRAFT_DIR="$HOME/models/Nemotron-3.5-Super-VL-LiLiCorr-ga-20261001/nemotron-3.5-super-vl-120b-a12b-ea20261008_vlilicorr-ga-20261001"
+
+# 1. Warm up kernels (pre-compiles FlashInfer SM120 & verifies Inductor C++ headers)
+./scripts/warmup_kernels.sh
+
+# 2. Inspect command and launch server
 DRY_RUN=1 ./serve.sh mtp  # inspect exact command; no GPU access
 ./serve.sh mtp            # measured default; user systemd unit and guard
 ./serve.sh status
@@ -60,7 +67,7 @@ SIXCAT_PYTHON=/var/lib/sixcat-eval/venv/bin/python ./bench.sh
 ./serve.sh down
 ```
 
-To reproduce the optional DFlash arm instead, run `./serve.sh dflash`, smoke, and `./bench.sh` with the same benchmarking policy. `bench.sh` defaults to the Spark-local `:8000/v1`. To match the **historical client transport**, run the same checked-out `bench.sh` from a separate Linux client with Sixcat installed, create an SSH local forward (`ssh -N -L 18000:127.0.0.1:8000 <your-spark-host>` in another terminal), then use `BASE_URL=http://127.0.0.1:18000/v1 ./bench.sh`. The tunnel alters client-observed latency; do not compare it interchangeably with a direct-on-Spark run. Do not serve both arms or another model simultaneously; `serve.sh` refuses a GPU compute process or occupied port and never stops someone else's service. It starts a persistent guard that stops **only this recipe's unit** below 4 GiB available RAM, below 2 GiB free swap, or if a manager that was active at launch exits. A first-use FlashInfer top-k JIT can add several minutes to startup. Unit logs: `journalctl --user -u vllm-super-vl-nvfp4-recipe -f`; guard log: `~/.local/state/model-serving-recipes/vllm-super-vl-nvfp4-recipe.service.jsonl`.
+To reproduce the optional DFlash arm instead, run `./serve.sh dflash`, smoke, and `./bench.sh` with the same benchmarking policy. `bench.sh` defaults to the Spark-local `:8000/v1`. To match the **historical client transport**, run the same checked-out `bench.sh` from a separate Linux client with Sixcat installed, create an SSH local forward (`ssh -N -L 18000:127.0.0.1:8000 <your-spark-host>` in another terminal), then use `BASE_URL=http://127.0.0.1:18000/v1 ./bench.sh`. The tunnel alters client-observed latency; do not compare it interchangeably with a direct-on-Spark run. Do not serve both arms or another model simultaneously; `serve.sh` refuses a GPU compute process or occupied port and never stops someone else's service. It starts a persistent guard that stops **only this recipe's unit** below 4 GiB available RAM, below 2 GiB free swap, or if a manager that was active at launch exits. Running `./scripts/warmup_kernels.sh` beforehand precompiles FlashInfer SM120 kernels with bounded parallelism (`MAX_JOBS=4`) to eliminate runtime compilation memory spikes. Unit logs: `journalctl --user -u vllm-super-vl-nvfp4-recipe -f`; guard log: `~/.local/state/model-serving-recipes/vllm-super-vl-nvfp4-recipe.service.jsonl`.
 
 ## Limits
 
